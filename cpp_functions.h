@@ -7,4 +7,4 @@ extern "C" {
     int relos(int a);
 }
 
-#endif // CPP_FUNCTIONS_H
+#endif

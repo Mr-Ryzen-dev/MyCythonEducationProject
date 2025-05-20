@@ -1,7 +1,12 @@
 # НИ ПРИ КАКИХ ОБСТОЯТЕЛЬСТВАХ НЕ ТРОГАТЬ ЭТУ ХУЙНЮ
+# ЭТО ТЕБЕ НЕ ПИТОНА ДУШИТЬ
+
+# Тут импорты сишных функций проходят
+# Просто этот файл ставишь в качестве заголовочного и функцию пикаешь
+
 from setuptools import setup
 from Cython.Build import cythonize
-from distutils.extension import Extension
+from distutils.extension import Extension # type: ignore
 
 extension = Extension(
     'cpp_wrapper',
