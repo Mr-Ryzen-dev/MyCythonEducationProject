@@ -4,7 +4,7 @@
 #define CPP_FUNCTIONS_H
 
 extern "C" {
-    int relos(int a);
+    int relos();
 }
 
 #endif

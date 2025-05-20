@@ -1,7 +1,7 @@
 # Объявление сишных функций для последующей работы
 cdef extern from "cpp_functions.h":
-    int relos(int a)
+    int relos()
 
 # Объявление питоновского говна на основе сишной хуеты для использования
-def py_relos(int a):
-    return relos(a)
+def py_relos():
+    relos()

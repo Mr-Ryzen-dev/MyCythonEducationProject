@@ -1,6 +1,5 @@
 # main.py
 import cpp_wrapper
 
-cpp_wrapper.py_relos(10)
+cpp_wrapper.py_relos()
 
-print()

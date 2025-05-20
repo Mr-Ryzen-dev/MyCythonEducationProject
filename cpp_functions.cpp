@@ -2,8 +2,10 @@
 // Прошу
 
 #include "cpp_functions.h"
+#include <iostream>
 
-int relos(int a) {
-    return a * a;
+int relos(void) {
+    std::cout << "hello world" << std::endl;
+    return 0;
 }
 
