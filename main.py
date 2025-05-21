@@ -1,4 +1,4 @@
-# main.py
+# Импорты
 import cpp_wrapper
 import pygame
 
@@ -20,6 +20,9 @@ background = pygame.transform.scale(background, (WIDTH, HEIGHT))
 player_img = pygame.image.load("DefaultPlayer.png").convert_alpha()
 player_img = pygame.transform.smoothscale(player_img, (80, 80))
 player_rect = pygame.Rect(100, 500, 80, 80)
+
+#---------------------------------------------------------------------------------------------------
+#Основной цикл
 
 while programIsRunning:
     screen.blit(background, (0, 0))

@@ -1,4 +1,4 @@
-// Сюда тоже даже не лезь
+// Сюда тоже не лезь
 
 #ifndef CPP_FUNCTIONS_H
 #define CPP_FUNCTIONS_H

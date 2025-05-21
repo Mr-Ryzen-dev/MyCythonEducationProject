@@ -1,5 +1,4 @@
-// Костя, сюда блять даже не лезь
-// Прошу
+// Костя, сюда даже не лезь
 
 #include "cpp_functions.h"
 #include <iostream>
