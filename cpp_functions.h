@@ -3,8 +3,8 @@
 #ifndef CPP_FUNCTIONS_H
 #define CPP_FUNCTIONS_H
 
-extern "C" {
-    int getWindowPropetries();
-}
+#include <utility>
+
+std::pair<int, int> getWindowProperties();
 
 #endif

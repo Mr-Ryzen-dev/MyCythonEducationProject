@@ -3,10 +3,10 @@
 
 #include "cpp_functions.h"
 #include <iostream>
+#include <utility>
 
-int getWindowPropetries(int Weight, int Height) {
-    std::cin >> Weight;
-    std::cin >> Height;
-    return Weight, Height;
+std::pair<int, int> getWindowProperties() {
+    int weight = 1920, height = 1080;
+    return std::make_pair(weight, height);
 }
 
