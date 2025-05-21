@@ -10,14 +10,14 @@ programIsRunning = True
 WIDTH, HEIGHT = cpp_wrapper.py_getWindowProperties()
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Супер игра")
+pygame.display.set_caption("Pygame 0.0.1")
 clock = pygame.time.Clock()
 
-background = pygame.image.load("карта.png").convert()
+background = pygame.image.load("TestMap.png").convert()
 background = pygame.transform.scale(background, (WIDTH, HEIGHT))
 
 
-player_img = pygame.image.load("ВАЖНО.png").convert_alpha()
+player_img = pygame.image.load("DefaultPlayer.png").convert_alpha()
 player_img = pygame.transform.smoothscale(player_img, (80, 80))
 player_rect = pygame.Rect(100, 500, 80, 80)
 
