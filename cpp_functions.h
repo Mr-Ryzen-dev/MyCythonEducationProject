@@ -4,6 +4,8 @@
 #define CPP_FUNCTIONS_H
 
 #include <utility>
+#include <windows.h>
+#include <iostream>
 
 std::pair<int, int> getWindowProperties();
 

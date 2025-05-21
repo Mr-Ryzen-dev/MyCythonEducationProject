@@ -13,6 +13,7 @@ extension = Extension(
     sources=['cpp_wrapper.pyx', 'cpp_functions.cpp'],
     include_dirs=['.'],
     extra_compile_args=['/std:c++17'],
+    libraries=['user32'],
     language='c++',
     zip_safe=False
 )
