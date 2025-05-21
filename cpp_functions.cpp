@@ -4,8 +4,9 @@
 #include "cpp_functions.h"
 #include <iostream>
 
-int relos(void) {
-    std::cout << "hello world" << std::endl;
-    return 0;
+int getWindowPropetries(int Weight, int Height) {
+    std::cin >> Weight;
+    std::cin >> Height;
+    return Weight, Height;
 }
 
