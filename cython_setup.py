@@ -1,20 +1,19 @@
-# НИ ПРИ КАКИХ ОБСТОЯТЕЛЬСТВАХ НЕ ТРОГАТЬ ЭТО ГОВНО
-
-from setuptools import setup
+from setuptools import setup, Extension
 from Cython.Build import cythonize
-from distutils.extension import Extension # type: ignore
+import numpy as np
 
 extension = Extension(
     'cpp_wrapper',
-    sources=['cpp_wrapper.pyx', 'cpp_functions.cpp'],
-    include_dirs=['.'],
-    extra_compile_args=['/std:c++17'],
-    libraries=['user32'],
+    sources=['cpp_wrapper.pyx', 'cpp_functions.cpp'],  # Исправлено форматирование
+    include_dirs=[np.get_include(), '.'],  # Исправлено форматирование
+    extra_compile_args=['/std:c++17'],  # Исправлено форматирование
+    libraries=['user32', 'gdi32'],  # Исправлено форматирование
     language='c++',
-    zip_safe=False
+    extra_link_args=['/SUBSYSTEM:WINDOWS']
 )
 
 setup(
     name='cpp_wrapper',
-    ext_modules=cythonize(extension)
+    ext_modules=cythonize([extension]),  # Обернули extension в список
+    zip_safe=False
 )

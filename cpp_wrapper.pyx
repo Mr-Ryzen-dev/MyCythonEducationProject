@@ -1,11 +1,28 @@
-# Объявление сишных функций для последующей работы
+# Объявление сишных функций в Cython
 #cython: language_level=3
 
 from libcpp.pair cimport pair
 
-cdef extern from "cpp_functions.h":
-    pair[int, int] getWindowProperties()  # Исправлен синтаксис объявления pair
+cdef extern from "windows.h":
+    int GetSystemMetrics(int)
+    int GetCursorPos(void*)
 
-def py_getWindowProperties():
-    cdef pair[int, int] result = getWindowProperties()  # Исправлен синтаксис объявления pair
+cdef extern from "windows.h":
+    ctypedef struct POINT:
+        int x
+        int y
+
+
+        bint GetCursorPos(POINT *lpPoint)
+
+cdef extern from "cpp_functions.h":
+    pair[int, int] getScreenSize()
+    pair[int, int] getCursorPosition()
+
+def py_getScreenSize():
+    cdef pair[int, int] result = getScreenSize()
+    return result.first, result.second
+
+def py_getCursorPosition():
+    cdef pair[int, int] result = getCursorPosition()
     return result.first, result.second

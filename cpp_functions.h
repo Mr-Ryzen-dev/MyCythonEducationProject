@@ -1,12 +1,17 @@
-// Сюда тоже не лезь
-
+//подключение библиотек
 #ifndef CPP_FUNCTIONS_H
 #define CPP_FUNCTIONS_H
 
-#include <utility>
-#include <windows.h>
 #include <iostream>
+#include <windows.h>
+#include <cstdint>
 
-std::pair<int, int> getWindowProperties();
+//объявление функций
+std::pair<int, int> getScreenSize();
+// Функция получения свойств окна
+// Возвращает ширину и высоту окна в виде пары
 
-#endif
+std::pair<int, int> getCursorPosition();
+// Возвращает координаты курсора в виде пары
+
+#endif // CPP_FUNCTIONS_H

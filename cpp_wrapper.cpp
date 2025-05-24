@@ -9,10 +9,18 @@
         "extra_compile_args": [
             "/std:c++17"
         ],
+        "extra_link_args": [
+            "/SUBSYSTEM:WINDOWS"
+        ],
         "include_dirs": [
+            "C:\\Users\\mrryz\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\numpy\\_core\\include",
             "."
         ],
         "language": "c++",
+        "libraries": [
+            "user32",
+            "gdi32"
+        ],
         "name": "cpp_wrapper",
         "sources": [
             "cpp_wrapper.pyx",
@@ -1159,6 +1167,7 @@ static CYTHON_INLINE float __PYX_NAN() {
 
     #endif
     
+#include "windows.h"
 #include "cpp_functions.h"
 #ifdef _OPENMP
 #include <omp.h>
@@ -2098,18 +2107,21 @@ static const char __pyx_k_func[] = "__func__";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_name[] = "__name__";
 static const char __pyx_k_test[] = "__test__";
-static const char __pyx_k_4A_6_q[] = "\200\001\330\004!\320!4\260A\330\004\013\2106\220\030\230\026\230q";
+static const char __pyx_k_2_6_q[] = "\200\001\330\004!\320!2\260!\330\004\013\2106\220\030\230\026\230q";
+static const char __pyx_k_a_6_q[] = "\200\001\330\004!\240\035\250a\330\004\013\2106\220\030\230\026\230q";
 static const char __pyx_k_module[] = "__module__";
 static const char __pyx_k_result[] = "result";
 static const char __pyx_k_qualname[] = "__qualname__";
 static const char __pyx_k_cpp_wrapper[] = "cpp_wrapper";
 static const char __pyx_k_is_coroutine[] = "_is_coroutine";
 static const char __pyx_k_cpp_wrapper_pyx[] = "cpp_wrapper.pyx";
+static const char __pyx_k_py_getScreenSize[] = "py_getScreenSize";
 static const char __pyx_k_asyncio_coroutines[] = "asyncio.coroutines";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
-static const char __pyx_k_py_getWindowProperties[] = "py_getWindowProperties";
+static const char __pyx_k_py_getCursorPosition[] = "py_getCursorPosition";
 /* #### Code section: decls ### */
-static PyObject *__pyx_pf_11cpp_wrapper_py_getWindowProperties(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
+static PyObject *__pyx_pf_11cpp_wrapper_py_getScreenSize(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
+static PyObject *__pyx_pf_11cpp_wrapper_2py_getCursorPosition(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
 /* #### Code section: late_includes ### */
 /* #### Code section: module_state ### */
 /* SmallCodeConfig */
@@ -2148,8 +2160,8 @@ typedef struct {
   #ifdef __Pyx_Coroutine_USED
   PyTypeObject *__pyx_CoroutineType;
   #endif
-  PyObject *__pyx_codeobj_tab[1];
-  PyObject *__pyx_string_tab[14];
+  PyObject *__pyx_codeobj_tab[2];
+  PyObject *__pyx_string_tab[15];
 /* #### Code section: module_state_contents ### */
 /* CachedMethodType.module_state_decls */
 #if CYTHON_COMPILING_IN_LIMITED_API
@@ -2194,10 +2206,11 @@ static __pyx_mstatetype * const __pyx_mstate_global = &__pyx_mstate_global_stati
 #define __pyx_n_u_main __pyx_string_tab[7]
 #define __pyx_n_u_module __pyx_string_tab[8]
 #define __pyx_n_u_name __pyx_string_tab[9]
-#define __pyx_n_u_py_getWindowProperties __pyx_string_tab[10]
-#define __pyx_n_u_qualname __pyx_string_tab[11]
-#define __pyx_n_u_result __pyx_string_tab[12]
-#define __pyx_n_u_test __pyx_string_tab[13]
+#define __pyx_n_u_py_getCursorPosition __pyx_string_tab[10]
+#define __pyx_n_u_py_getScreenSize __pyx_string_tab[11]
+#define __pyx_n_u_qualname __pyx_string_tab[12]
+#define __pyx_n_u_result __pyx_string_tab[13]
+#define __pyx_n_u_test __pyx_string_tab[14]
 /* #### Code section: module_state_clear ### */
 #if CYTHON_USE_MODULE_STATE
 static CYTHON_SMALL_CODE int __pyx_m_clear(PyObject *m) {
@@ -2218,8 +2231,8 @@ static CYTHON_SMALL_CODE int __pyx_m_clear(PyObject *m) {
   #if CYTHON_PEP489_MULTI_PHASE_INIT
   __Pyx_State_RemoveModule(NULL);
   #endif
-  for (int i=0; i<1; ++i) { Py_CLEAR(clear_module_state->__pyx_codeobj_tab[i]); }
-  for (int i=0; i<14; ++i) { Py_CLEAR(clear_module_state->__pyx_string_tab[i]); }
+  for (int i=0; i<2; ++i) { Py_CLEAR(clear_module_state->__pyx_codeobj_tab[i]); }
+  for (int i=0; i<15; ++i) { Py_CLEAR(clear_module_state->__pyx_string_tab[i]); }
   return 0;
 }
 #endif
@@ -2240,38 +2253,38 @@ static CYTHON_SMALL_CODE int __pyx_m_traverse(PyObject *m, visitproc visit, void
   #ifdef __Pyx_FusedFunction_USED
   Py_VISIT(traverse_module_state->__pyx_FusedFunctionType);
   #endif
-  for (int i=0; i<1; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_codeobj_tab[i]); }
-  for (int i=0; i<14; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_string_tab[i]); }
+  for (int i=0; i<2; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_codeobj_tab[i]); }
+  for (int i=0; i<15; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_string_tab[i]); }
   return 0;
 }
 #endif
 /* #### Code section: module_code ### */
 
-/* "cpp_wrapper.pyx":9
- *     pair[int, int] getWindowProperties()  #    pair
+/* "cpp_wrapper.pyx":22
+ *     pair[int, int] getCursorPosition()
  * 
- * def py_getWindowProperties():             # <<<<<<<<<<<<<<
- *     cdef pair[int, int] result = getWindowProperties()  #    pair
+ * def py_getScreenSize():             # <<<<<<<<<<<<<<
+ *     cdef pair[int, int] result = getScreenSize()
  *     return result.first, result.second
 */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_11cpp_wrapper_1py_getWindowProperties(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyMethodDef __pyx_mdef_11cpp_wrapper_1py_getWindowProperties = {"py_getWindowProperties", (PyCFunction)__pyx_pw_11cpp_wrapper_1py_getWindowProperties, METH_NOARGS, 0};
-static PyObject *__pyx_pw_11cpp_wrapper_1py_getWindowProperties(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_11cpp_wrapper_1py_getScreenSize(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyMethodDef __pyx_mdef_11cpp_wrapper_1py_getScreenSize = {"py_getScreenSize", (PyCFunction)__pyx_pw_11cpp_wrapper_1py_getScreenSize, METH_NOARGS, 0};
+static PyObject *__pyx_pw_11cpp_wrapper_1py_getScreenSize(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
   CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("py_getWindowProperties (wrapper)", 0);
+  __Pyx_RefNannySetupContext("py_getScreenSize (wrapper)", 0);
   __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
-  __pyx_r = __pyx_pf_11cpp_wrapper_py_getWindowProperties(__pyx_self);
+  __pyx_r = __pyx_pf_11cpp_wrapper_py_getScreenSize(__pyx_self);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_11cpp_wrapper_py_getWindowProperties(CYTHON_UNUSED PyObject *__pyx_self) {
+static PyObject *__pyx_pf_11cpp_wrapper_py_getScreenSize(CYTHON_UNUSED PyObject *__pyx_self) {
   std::pair<int,int>  __pyx_v_result;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -2281,43 +2294,46 @@ static PyObject *__pyx_pf_11cpp_wrapper_py_getWindowProperties(CYTHON_UNUSED PyO
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("py_getWindowProperties", 0);
+  __Pyx_RefNannySetupContext("py_getScreenSize", 0);
 
-  /* "cpp_wrapper.pyx":10
+  /* "cpp_wrapper.pyx":23
  * 
- * def py_getWindowProperties():
- *     cdef pair[int, int] result = getWindowProperties()  #    pair             # <<<<<<<<<<<<<<
+ * def py_getScreenSize():
+ *     cdef pair[int, int] result = getScreenSize()             # <<<<<<<<<<<<<<
  *     return result.first, result.second
+ * 
 */
-  __pyx_v_result = getWindowProperties();
+  __pyx_v_result = getScreenSize();
 
-  /* "cpp_wrapper.pyx":11
- * def py_getWindowProperties():
- *     cdef pair[int, int] result = getWindowProperties()  #    pair
+  /* "cpp_wrapper.pyx":24
+ * def py_getScreenSize():
+ *     cdef pair[int, int] result = getScreenSize()
  *     return result.first, result.second             # <<<<<<<<<<<<<<
+ * 
+ * def py_getCursorPosition():
 */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyLong_From_int(__pyx_v_result.first); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 11, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyLong_From_int(__pyx_v_result.first); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyLong_From_int(__pyx_v_result.second); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 11, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyLong_From_int(__pyx_v_result.second); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 11, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_1);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1) != (0)) __PYX_ERR(0, 11, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1) != (0)) __PYX_ERR(0, 24, __pyx_L1_error);
   __Pyx_GIVEREF(__pyx_t_2);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_t_2) != (0)) __PYX_ERR(0, 11, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_t_2) != (0)) __PYX_ERR(0, 24, __pyx_L1_error);
   __pyx_t_1 = 0;
   __pyx_t_2 = 0;
   __pyx_r = __pyx_t_3;
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "cpp_wrapper.pyx":9
- *     pair[int, int] getWindowProperties()  #    pair
+  /* "cpp_wrapper.pyx":22
+ *     pair[int, int] getCursorPosition()
  * 
- * def py_getWindowProperties():             # <<<<<<<<<<<<<<
- *     cdef pair[int, int] result = getWindowProperties()  #    pair
+ * def py_getScreenSize():             # <<<<<<<<<<<<<<
+ *     cdef pair[int, int] result = getScreenSize()
  *     return result.first, result.second
 */
 
@@ -2326,7 +2342,94 @@ static PyObject *__pyx_pf_11cpp_wrapper_py_getWindowProperties(CYTHON_UNUSED PyO
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("cpp_wrapper.py_getWindowProperties", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("cpp_wrapper.py_getScreenSize", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "cpp_wrapper.pyx":26
+ *     return result.first, result.second
+ * 
+ * def py_getCursorPosition():             # <<<<<<<<<<<<<<
+ *     cdef pair[int, int] result = getCursorPosition()
+ *     return result.first, result.second
+*/
+
+/* Python wrapper */
+static PyObject *__pyx_pw_11cpp_wrapper_3py_getCursorPosition(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyMethodDef __pyx_mdef_11cpp_wrapper_3py_getCursorPosition = {"py_getCursorPosition", (PyCFunction)__pyx_pw_11cpp_wrapper_3py_getCursorPosition, METH_NOARGS, 0};
+static PyObject *__pyx_pw_11cpp_wrapper_3py_getCursorPosition(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("py_getCursorPosition (wrapper)", 0);
+  __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
+  __pyx_r = __pyx_pf_11cpp_wrapper_2py_getCursorPosition(__pyx_self);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_11cpp_wrapper_2py_getCursorPosition(CYTHON_UNUSED PyObject *__pyx_self) {
+  std::pair<int,int>  __pyx_v_result;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("py_getCursorPosition", 0);
+
+  /* "cpp_wrapper.pyx":27
+ * 
+ * def py_getCursorPosition():
+ *     cdef pair[int, int] result = getCursorPosition()             # <<<<<<<<<<<<<<
+ *     return result.first, result.second
+*/
+  __pyx_v_result = getCursorPosition();
+
+  /* "cpp_wrapper.pyx":28
+ * def py_getCursorPosition():
+ *     cdef pair[int, int] result = getCursorPosition()
+ *     return result.first, result.second             # <<<<<<<<<<<<<<
+*/
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyLong_From_int(__pyx_v_result.first); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyLong_From_int(__pyx_v_result.second); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_1);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1) != (0)) __PYX_ERR(0, 28, __pyx_L1_error);
+  __Pyx_GIVEREF(__pyx_t_2);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_t_2) != (0)) __PYX_ERR(0, 28, __pyx_L1_error);
+  __pyx_t_1 = 0;
+  __pyx_t_2 = 0;
+  __pyx_r = __pyx_t_3;
+  __pyx_t_3 = 0;
+  goto __pyx_L0;
+
+  /* "cpp_wrapper.pyx":26
+ *     return result.first, result.second
+ * 
+ * def py_getCursorPosition():             # <<<<<<<<<<<<<<
+ *     cdef pair[int, int] result = getCursorPosition()
+ *     return result.first, result.second
+*/
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_AddTraceback("cpp_wrapper.py_getCursorPosition", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -2695,20 +2798,32 @@ __Pyx_RefNannySetupContext("PyInit_cpp_wrapper", 0);
   (void)__Pyx_modinit_function_import_code(__pyx_mstate);
   /*--- Execution code ---*/
 
-  /* "cpp_wrapper.pyx":9
- *     pair[int, int] getWindowProperties()  #    pair
+  /* "cpp_wrapper.pyx":22
+ *     pair[int, int] getCursorPosition()
  * 
- * def py_getWindowProperties():             # <<<<<<<<<<<<<<
- *     cdef pair[int, int] result = getWindowProperties()  #    pair
+ * def py_getScreenSize():             # <<<<<<<<<<<<<<
+ *     cdef pair[int, int] result = getScreenSize()
  *     return result.first, result.second
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_11cpp_wrapper_1py_getWindowProperties, 0, __pyx_mstate_global->__pyx_n_u_py_getWindowProperties, NULL, __pyx_mstate_global->__pyx_n_u_cpp_wrapper, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[0])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_11cpp_wrapper_1py_getScreenSize, 0, __pyx_mstate_global->__pyx_n_u_py_getScreenSize, NULL, __pyx_mstate_global->__pyx_n_u_cpp_wrapper, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[0])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_py_getWindowProperties, __pyx_t_2) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_py_getScreenSize, __pyx_t_2) < 0) __PYX_ERR(0, 22, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "cpp_wrapper.pyx":26
+ *     return result.first, result.second
+ * 
+ * def py_getCursorPosition():             # <<<<<<<<<<<<<<
+ *     cdef pair[int, int] result = getCursorPosition()
+ *     return result.first, result.second
+*/
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_11cpp_wrapper_3py_getCursorPosition, 0, __pyx_mstate_global->__pyx_n_u_py_getCursorPosition, NULL, __pyx_mstate_global->__pyx_n_u_cpp_wrapper, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[1])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_py_getCursorPosition, __pyx_t_2) < 0) __PYX_ERR(0, 26, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "cpp_wrapper.pyx":1
- * #             # <<<<<<<<<<<<<<
+ * #     Cython             # <<<<<<<<<<<<<<
  * #cython: language_level=3
  * 
 */
@@ -2752,11 +2867,11 @@ __Pyx_RefNannySetupContext("PyInit_cpp_wrapper", 0);
 
 typedef struct {
     const char *s;
-#if 22 <= 65535
+#if 20 <= 65535
     const unsigned short n;
-#elif 22 / 2 < INT_MAX
+#elif 20 / 2 < INT_MAX
     const unsigned int n;
-#elif 22 / 2 < LONG_MAX
+#elif 20 / 2 < LONG_MAX
     const unsigned long n;
 #else
     const Py_ssize_t n;
@@ -2785,7 +2900,8 @@ static const __Pyx_StringTabEntry __pyx_string_tab[] = {
   {__pyx_k_main, sizeof(__pyx_k_main), 0, 1, 1}, /* PyObject cname: __pyx_n_u_main */
   {__pyx_k_module, sizeof(__pyx_k_module), 0, 1, 1}, /* PyObject cname: __pyx_n_u_module */
   {__pyx_k_name, sizeof(__pyx_k_name), 0, 1, 1}, /* PyObject cname: __pyx_n_u_name */
-  {__pyx_k_py_getWindowProperties, sizeof(__pyx_k_py_getWindowProperties), 0, 1, 1}, /* PyObject cname: __pyx_n_u_py_getWindowProperties */
+  {__pyx_k_py_getCursorPosition, sizeof(__pyx_k_py_getCursorPosition), 0, 1, 1}, /* PyObject cname: __pyx_n_u_py_getCursorPosition */
+  {__pyx_k_py_getScreenSize, sizeof(__pyx_k_py_getScreenSize), 0, 1, 1}, /* PyObject cname: __pyx_n_u_py_getScreenSize */
   {__pyx_k_qualname, sizeof(__pyx_k_qualname), 0, 1, 1}, /* PyObject cname: __pyx_n_u_qualname */
   {__pyx_k_result, sizeof(__pyx_k_result), 0, 1, 1}, /* PyObject cname: __pyx_n_u_result */
   {__pyx_k_test, sizeof(__pyx_k_test), 0, 1, 1}, /* PyObject cname: __pyx_n_u_test */
@@ -2826,7 +2942,7 @@ static int __Pyx_InitConstants(__pyx_mstatetype *__pyx_mstate) {
             unsigned int num_kwonly_args : 1;
             unsigned int nlocals : 1;
             unsigned int flags : 10;
-            unsigned int first_line : 4;
+            unsigned int first_line : 5;
             unsigned int line_table_length : 9;
         } __Pyx_PyCode_New_function_description;
 /* NewCodeObj.proto */
@@ -2844,9 +2960,14 @@ static int __Pyx_CreateCodeObjects(__pyx_mstatetype *__pyx_mstate) {
   PyObject* tuple_dedup_map = PyDict_New();
   if (unlikely(!tuple_dedup_map)) return -1;
   {
-    const __Pyx_PyCode_New_function_description descr = {0, 0, 0, 1, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 9, 21};
+    const __Pyx_PyCode_New_function_description descr = {0, 0, 0, 1, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 22, 20};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_result};
-    __pyx_mstate_global->__pyx_codeobj_tab[0] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_cpp_wrapper_pyx, __pyx_mstate->__pyx_n_u_py_getWindowProperties, __pyx_k_4A_6_q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[0])) goto bad;
+    __pyx_mstate_global->__pyx_codeobj_tab[0] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_cpp_wrapper_pyx, __pyx_mstate->__pyx_n_u_py_getScreenSize, __pyx_k_a_6_q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[0])) goto bad;
+  }
+  {
+    const __Pyx_PyCode_New_function_description descr = {0, 0, 0, 1, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 26, 21};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_result};
+    __pyx_mstate_global->__pyx_codeobj_tab[1] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_cpp_wrapper_pyx, __pyx_mstate->__pyx_n_u_py_getCursorPosition, __pyx_k_2_6_q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[1])) goto bad;
   }
   Py_DECREF(tuple_dedup_map);
   return 0;
