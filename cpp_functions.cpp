@@ -1,4 +1,3 @@
-
 //Реализации c++ функций
 
 #include "cpp_functions.h"
@@ -25,3 +24,26 @@ std::pair<int, int> getCursorPosition() {
     return std::make_pair(p.x, p.y);
 }
 // Реализация получения местоположения курсора
+
+double getBasePlayerRotation(double player_x, double player_y, double mouse_x, double mouse_y) {
+
+    const double PI = 3.14159265358979323846; // Используем double для точности
+    
+    // Вычисляем разницу координат
+    double difference_x = mouse_x - player_x;
+    double difference_y = mouse_y - player_y;
+    
+    // В atan2 аргументы должны быть в порядке (y, x)
+    double angle_radians = std::atan2(difference_y, difference_x);
+    
+    // Переводим радианы в градусы
+    double angle_degrees = (angle_radians * 180.0 / PI);
+    
+    // Корректируем угол, так как в компьютерной системе координат
+    // угол должен быть от 0 до 360 градусов
+    if (angle_degrees < 0) {
+        angle_degrees += 360.0;
+    }
+    
+    return angle_degrees;
+}
