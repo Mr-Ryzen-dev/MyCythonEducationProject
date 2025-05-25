@@ -16,7 +16,7 @@ cdef extern from "windows.h":
 cdef extern from "cpp_functions.h":
     pair[int, int] getScreenSize()
     pair[int, int] getCursorPosition()
-    int getBasePlayerRotation(double player_x, double player_y, double mouse_x, double mouse_y)
+    double getBasePlayerRotation(double player_x, double player_y, double mouse_x, double mouse_y)
 
 def py_getScreenSize():
     cdef pair[int, int] result = getScreenSize()

@@ -2344,7 +2344,7 @@ static CYTHON_SMALL_CODE int __pyx_m_traverse(PyObject *m, visitproc visit, void
 /* #### Code section: module_code ### */
 
 /* "cpp_wrapper.pyx":21
- *     int getBasePlayerRotation(double player_x, double player_y, double mouse_x, double mouse_y)
+ *     double getBasePlayerRotation(double player_x, double player_y, double mouse_x, double mouse_y)
  * 
  * def py_getScreenSize():             # <<<<<<<<<<<<<<
  *     cdef pair[int, int] result = getScreenSize()
@@ -2413,7 +2413,7 @@ static PyObject *__pyx_pf_11cpp_wrapper_py_getScreenSize(CYTHON_UNUSED PyObject 
   goto __pyx_L0;
 
   /* "cpp_wrapper.pyx":21
- *     int getBasePlayerRotation(double player_x, double player_y, double mouse_x, double mouse_y)
+ *     double getBasePlayerRotation(double player_x, double player_y, double mouse_x, double mouse_y)
  * 
  * def py_getScreenSize():             # <<<<<<<<<<<<<<
  *     cdef pair[int, int] result = getScreenSize()
@@ -3051,7 +3051,7 @@ __Pyx_RefNannySetupContext("PyInit_cpp_wrapper", 0);
   /*--- Execution code ---*/
 
   /* "cpp_wrapper.pyx":21
- *     int getBasePlayerRotation(double player_x, double player_y, double mouse_x, double mouse_y)
+ *     double getBasePlayerRotation(double player_x, double player_y, double mouse_x, double mouse_y)
  * 
  * def py_getScreenSize():             # <<<<<<<<<<<<<<
  *     cdef pair[int, int] result = getScreenSize()

@@ -8,15 +8,11 @@ import math
 #объявления
 pygame.init()
 
-developer_mode = 1
-
 playerMovementSpeed = 4
 programIsRunning = True
 
-if(developer_mode):
-    WIDTH, HEIGHT = 1000, 1000
-else:
-    WIDTH, HEIGHT = cpp_wrapper.py_getScreenSize()
+
+WIDTH, HEIGHT = cpp_wrapper.py_getScreenSize()
 
 CursorX, CursorY = cpp_wrapper.py_getCursorPosition()
 FPS = 60
@@ -34,8 +30,30 @@ try:
     
     player_img = pygame.image.load("DefaultPlayer.png").convert_alpha()
     player_img = pygame.transform.smoothscale(player_img, (80, 80))
-    
-    player_pawn = pygame.Rect(100, 500, 80, 80)
+
+    class PlayerPawn:
+        def __init__(self, x, y, image):
+            self.original_image = image
+            self.image = image
+            self.rect = self.image.get_rect(center=(x, y))
+            self.position = (x, y)
+            self.x = x
+            self.y = y  
+
+        def rotate(self):
+            # Получаем координаты курсора
+            mouse_x, mouse_y = cpp_wrapper.py_getCursorPosition()
+            
+            # Вычисляем угол через C++ функцию
+            angle = cpp_wrapper.py_getBasePlayerRotation(
+                self.x, self.y, mouse_x, mouse_y
+            )+180
+            
+            # Поворачиваем изображение
+            self.image = pygame.transform.rotate(self.original_image, angle)
+            self.rect = self.image.get_rect(center=self.position)
+
+    player_pawn = PlayerPawn(100, 500, player_img)
 
 except pygame.error as e:
     print(f"Ошибка загрузки изображения: {e}")
@@ -59,16 +77,20 @@ def get_player_cords():
 #функция проверки на движение
 def update_player():
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_w]:
+    if keys[pygame.K_w]:  # Исправлены квадратные скобки
         player_pawn.y -= playerMovementSpeed
-    if keys[pygame.K_s]:
+    if keys[pygame.K_s]:  # Исправлены квадратные скобки
         player_pawn.y += playerMovementSpeed
-    if keys[pygame.K_a]:
+    if keys[pygame.K_a]:  # Исправлены квадратные скобки
         player_pawn.x -= playerMovementSpeed
-    if keys[pygame.K_d]:
+    if keys[pygame.K_d]:  # Исправлены квадратные скобки
         player_pawn.x += playerMovementSpeed
 
-    player_pawn.clamp_ip(screen.get_rect())
+    # Обновляем позицию после изменения координат
+    player_pawn.position = (player_pawn.x, player_pawn.y)
+    player_pawn.rect.center = player_pawn.position
+    player_pawn.rect.clamp_ip(screen.get_rect())
+
 
 #---------------------------------------------------------------------------------------------------
 #функция получения местоположения курсора на экране
@@ -83,20 +105,13 @@ def main():
         while True:
             handle_events()
             update_player()
-            update_cursor_pos()
+            player_pawn.rotate()  # Добавляем поворот
 
             screen.blit(background, (0, 0))
-            screen.blit(player_img, player_pawn.topleft)
+            screen.blit(player_pawn.image, player_pawn.rect.topleft)  # Исправленный вызов
             
             pygame.display.flip()
             clock.tick(FPS)
-
-            get_player_cords()
-
-            CursorX, CursorY = cpp_wrapper.py_getCursorPosition()
-            angle = cpp_wrapper.py_getBasePlayerRotation(player_x, player_y, CursorX, CursorY)
-
-            print({angle})
 
     except Exception as e:
         print(f"Произошла ошибка: {e}")
