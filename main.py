@@ -76,7 +76,7 @@ def get_player_cords():
 #---------------------------------------------------------------------------------------------------
 #функция проверки на движение
 def update_player():
-    keys = pygame.key.get_pressed(),
+    keys = pygame.key.get_pressed()
     
     if keys[pygame.K_w]:  # Исправлены квадратные скобки
         player_pawn.y -= playerMovementSpeed
