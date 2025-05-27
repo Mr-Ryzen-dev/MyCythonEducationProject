@@ -23,6 +23,7 @@ std::pair<int, int> getCursorPosition() {
     }
     
     return std::make_pair(p.x, p.y);
+    
 }
 // Реализация получения местоположения курсора
 

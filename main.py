@@ -76,7 +76,8 @@ def get_player_cords():
 #---------------------------------------------------------------------------------------------------
 #функция проверки на движение
 def update_player():
-    keys = pygame.key.get_pressed()
+    keys = pygame.key.get_pressed(),
+    
     if keys[pygame.K_w]:  # Исправлены квадратные скобки
         player_pawn.y -= playerMovementSpeed
     if keys[pygame.K_s]:  # Исправлены квадратные скобки
@@ -85,7 +86,8 @@ def update_player():
         player_pawn.x -= playerMovementSpeed
     if keys[pygame.K_d]:  # Исправлены квадратные скобки
         player_pawn.x += playerMovementSpeed
-
+    if keys[pygame.K_ESCAPE]:
+        pygame.quit()
     # Обновляем позицию после изменения координат
     player_pawn.position = (player_pawn.x, player_pawn.y)
     player_pawn.rect.center = player_pawn.position
