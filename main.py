@@ -3,6 +3,7 @@ import cpp_wrapper
 import pygame
 import sys
 import math
+import random
 
 #---------------------------------------------------------------------------------------------------
 #объявления
@@ -30,7 +31,11 @@ try:
     
     player_img = pygame.image.load("DefaultPlayer.png").convert_alpha()
     player_img = pygame.transform.smoothscale(player_img, (80, 80))
-
+    
+    bot_img_raw = pygame.image.load("мент.png").convert_alpha()
+    bot_img = pygame.transform.smoothscale(bot_img_raw, (60, 60)) 
+    
+    
     class PlayerPawn:
         def __init__(self, x, y, image):
             self.original_image = image
@@ -39,6 +44,7 @@ try:
             self.position = (x, y)
             self.x = x
             self.y = y  
+            self.angle = 0
 
         def rotate(self):
             # Получаем координаты курсора
@@ -76,7 +82,7 @@ def get_player_cords():
 #---------------------------------------------------------------------------------------------------
 #функция проверки на движение
 def update_player():
-    keys = pygame.key.get_pressed(),
+    keys = pygame.key.get_pressed()
     
     if keys[pygame.K_w]:  # Исправлены квадратные скобки
         player_pawn.y -= playerMovementSpeed
@@ -117,7 +123,76 @@ def main():
 
     except Exception as e:
         print(f"Произошла ошибка: {e}")
+        
+        
+#---------------------------------------------------------------------------------------------------      
+#Боты
+class BotPawn:
+    def __init__(self, x, y, image):
+        self.original_bot_img = image
+        self.image = image
+        self.rect = self.image.get_rect(center=(x, y))
+        self.position = (x, y)
+        self.x = x
+        self.y = y
+        self.angle = 0
+        self.direction = [random.choice([-1, 0, 1]), random.choice([-1, 0, 1])]
 
+    def move(self):
+        if random.randint(0, 100) < 5:
+            self.direction = [random.choice([-1, 0, 1]), random.choice([-1, 0, 1])]
+
+        self.x += self.direction[0] * 2
+        self.y += self.direction[1] * 2
+
+        self.x = max(0, min(WIDTH, self.x))
+        self.y = max(0, min(HEIGHT, self.y))
+
+        self.position = (self.x, self.y)
+        self.rect.center = self.position
+
+    def rotate(self):
+        dx, dy = self.direction
+        angle = 0
+        if dx != 0 or dy != 0:
+            angle = math.degrees(math.atan2(-dy, dx))
+        self.image = pygame.transform.rotate(self.original_bot_img, angle)
+        self.rect = self.image.get_rect(center=self.position)
+
+#---------------------------------------------------------------------------------------------------
+# Инициализация объектов
+player_pawn = PlayerPawn(100, 500, player_img)
+
+bots = [
+    BotPawn(300, 100, bot_img),
+    BotPawn(500, 400, bot_img),
+    BotPawn(700, 300, bot_img),
+    BotPawn(200, 500, bot_img)
+]
+
+#Цыкл ботов
+def main():
+    try:
+         while True:
+            handle_events()
+            update_player()
+            update_cursor_pos()
+            player_pawn.rotate()
+
+            for bot in bots:
+                bot.move()
+                bot.rotate()
+
+            screen.blit(background, (0, 0))
+            screen.blit(player_pawn.image, player_pawn.rect.topleft)
+
+            for bot in bots:
+                screen.blit(bot.image, bot.rect.topleft)
+
+            pygame.display.flip()
+            clock.tick(FPS)
+    except Exception as e:
+        print(f"Произошла ошибка: {e}")
 #---------------------------------------------------------------------------------------------------
 #Запуск основного цикла
 main()
