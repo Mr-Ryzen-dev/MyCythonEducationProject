@@ -11,7 +11,6 @@ pygame.init()
 playerMovementSpeed = 4
 programIsRunning = True
 
-
 WIDTH, HEIGHT = cpp_wrapper.py_getScreenSize()
 
 CursorX, CursorY = cpp_wrapper.py_getCursorPosition()
@@ -37,6 +36,7 @@ try:
             self.image = image
             self.rect = self.image.get_rect(center=(x, y))
             self.position = (x, y)
+            self.speed = playerMovementSpeed
             self.x = x
             self.y = y  
 
@@ -78,14 +78,14 @@ def get_player_cords():
 def update_player():
     keys = pygame.key.get_pressed()
     
-    if keys[pygame.K_w]:  # Исправлены квадратные скобки
-        player_pawn.y -= playerMovementSpeed
-    if keys[pygame.K_s]:  # Исправлены квадратные скобки
-        player_pawn.y += playerMovementSpeed
-    if keys[pygame.K_a]:  # Исправлены квадратные скобки
-        player_pawn.x -= playerMovementSpeed
-    if keys[pygame.K_d]:  # Исправлены квадратные скобки
-        player_pawn.x += playerMovementSpeed
+    if keys[pygame.K_w]:  
+        cpp_wrapper.py_PawnMove(player_x, player_y, double angle, double speed, char direction)
+    if keys[pygame.K_s]:  
+        cpp_wrapper.py_PawnMove(player_x, player_y, double angle, double speed, char direction)
+    if keys[pygame.K_a]:  
+        cpp_wrapper.py_PawnMove(player_x, player_y, double angle, double speed, char direction)
+    if keys[pygame.K_d]:  
+        cpp_wrapper.py_PawnMove(player_x, player_y, double angle, double speed, char direction)
     if keys[pygame.K_ESCAPE]:
         pygame.quit()
     # Обновляем позицию после изменения координат

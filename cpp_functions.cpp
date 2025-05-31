@@ -44,3 +44,37 @@ double getBasePlayerRotation(double player_x, double player_y,
     return -angle;
     
 }
+
+std::pair<double, double> PawnMove(double x, double y, double angle, double speed, char direction){
+    // direction: 'L' - влево, 'R' - вправо, 'F' - вперед, 'B' - назад
+    double radians = angle * PI / 180.0;
+
+    // Определяем направление движения
+    double dx, dy;
+
+    switch (direction) {
+
+        case 'L': // Движение влево
+
+            dx = -speed * cos(radians);
+            dy = -speed * sin(radians);
+        
+        case 'R': // Движение вправо
+
+            dx = speed * cos(radians);
+            dy = speed * sin(radians);
+
+        case 'F': // Движение вперед
+
+            dx = speed * cos(radians);
+            dy = speed * sin(radians);
+
+        case 'B': // Движение назад - меняем знак скорости'
+
+            dx = -speed * cos(radians);
+            dy = -speed * sin(radians);
+    }
+
+    // Обновляем координаты
+    return std::make_pair((x += dx), (y += dy));
+}
