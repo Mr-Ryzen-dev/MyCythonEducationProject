@@ -4,9 +4,7 @@
 
 #include <iostream>
 #include <windows.h>
-#include <cstdint>
 #include <math.h>
-#include <cmath>
 
 //объявление функций
 std::pair<int, int> getScreenSize();
