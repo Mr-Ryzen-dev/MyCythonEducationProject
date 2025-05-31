@@ -9,6 +9,7 @@ import random
 #объявления
 pygame.init()
 
+
 playerMovementSpeed = 4
 programIsRunning = True
 
@@ -17,7 +18,6 @@ WIDTH, HEIGHT = cpp_wrapper.py_getScreenSize()
 CursorX, CursorY = cpp_wrapper.py_getCursorPosition()
 FPS = 60
 
-pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Pygame 0.0.1")
 clock = pygame.time.Clock()
@@ -46,15 +46,29 @@ try:
             self.y = y  
             self.angle = 0
 
-        def rotate(self):
+            self.update_position()
+
+        def update_position(self):
+        # Синхронизируем все координаты
+            self.rect.center = (self.x, self.y)
+            self.position = (self.x, self.y)
+
+        def getplayerpos(self):
+
+            return self.x, self.y
+
+        def getAngle(self):
             # Получаем координаты курсора
             mouse_x, mouse_y = cpp_wrapper.py_getCursorPosition()
             
             # Вычисляем угол через C++ функцию
-            angle = cpp_wrapper.py_getBasePlayerRotation(
+            return cpp_wrapper.py_getBasePlayerRotation(
                 self.x, self.y, mouse_x, mouse_y
             )+180
-            
+
+        def rotate(self):
+
+            angle = player_pawn.getAngle()
             # Поворачиваем изображение
             self.image = pygame.transform.rotate(self.original_image, angle)
             self.rect = self.image.get_rect(center=self.position)
@@ -74,57 +88,56 @@ def handle_events():
             sys.exit(0)
 
 #---------------------------------------------------------------------------------------------------
-#функция получения координат персонажа
-def get_player_cords():
-    global player_x, player_y
-    player_x, player_y = player_pawn.center
-
-#---------------------------------------------------------------------------------------------------
-#функция проверки на движение
-def update_player():
-    keys = pygame.key.get_pressed()
-    
-    if keys[pygame.K_w]:  
-        cpp_wrapper.py_PawnMove(player_x, player_y, double angle, double speed, char direction)
-    if keys[pygame.K_s]:  
-        cpp_wrapper.py_PawnMove(player_x, player_y, double angle, double speed, char direction)
-    if keys[pygame.K_a]:  
-        cpp_wrapper.py_PawnMove(player_x, player_y, double angle, double speed, char direction)
-    if keys[pygame.K_d]:  
-        cpp_wrapper.py_PawnMove(player_x, player_y, double angle, double speed, char direction)
-    if keys[pygame.K_ESCAPE]:
-        pygame.quit()
-    # Обновляем позицию после изменения координат
-    player_pawn.position = (player_pawn.x, player_pawn.y)
-    player_pawn.rect.center = player_pawn.position
-    player_pawn.rect.clamp_ip(screen.get_rect())
-
-
-#---------------------------------------------------------------------------------------------------
 #функция получения местоположения курсора на экране
 def update_cursor_pos():
+    """Обновляет позицию курсора с проверкой на ошибки"""
     global CursorX, CursorY
-    CursorX, CursorY = cpp_wrapper.py_getCursorPosition()
-
-#---------------------------------------------------------------------------------------------------
-#Основной цикл
-def main():
     try:
-        while True:
-            handle_events()
-            update_player()
-            player_pawn.rotate()  # Добавляем поворот
+        CursorX, CursorY = cpp_wrapper.py_getCursorPosition()
+        CursorX, CursorY = int(CursorX), int(CursorY)  # Гарантируем целые числа
+    except (TypeError, ValueError) as e:
+        print(f"Ошибка получения позиции курсора: {e}")
+        CursorX, CursorY = 0, 0  # Значения по умолчанию
 
-            screen.blit(background, (0, 0))
-            screen.blit(player_pawn.image, player_pawn.rect.topleft)  # Исправленный вызов
-            
-            pygame.display.flip()
-            clock.tick(FPS)
+def move():
+    """Обрабатывает движение игрока с улучшенной логикой"""
+    keys = pygame.key.get_pressed()
+    angle = player_pawn.getAngle()
+    x, y = map(int, player_pawn.getplayerpos())  # Гарантируем целые координаты
+    
+    # Инициализация смещения
+    dx, dy = 0, 0
+    
+    # Обработка управления с учетом одновременного нажатия клавиш
+    if keys[pygame.K_w]:
+        new_pos = cpp_wrapper.py_PawnMove(x, y, angle, playerMovementSpeed, 3)
+        if new_pos: dx += new_pos[0] - x; dy += new_pos[1] - y
+    if keys[pygame.K_s]:
+        new_pos = cpp_wrapper.py_PawnMove(x, y, angle, playerMovementSpeed, 4)
+        if new_pos: dx += new_pos[0] - x; dy += new_pos[1] - y
+    if keys[pygame.K_a]:
+        new_pos = cpp_wrapper.py_PawnMove(x, y, angle, playerMovementSpeed, 1)
+        if new_pos: dx += new_pos[0] - x; dy += new_pos[1] - y
+    if keys[pygame.K_d]:
+        new_pos = cpp_wrapper.py_PawnMove(x, y, angle, playerMovementSpeed, 2)
+        if new_pos: dx += new_pos[0] - x; dy += new_pos[1] - y
+    
+    # Нормализация диагонального движения
+    if dx != 0 and dy != 0:
+        dx *= 0.7071  # 1/sqrt(2)
+        dy *= 0.7071
+    
+    # Обновление позиции
+    newx, newy = x + int(dx), y + int(dy)
+    
+    if (newx, newy) != (x, y):
+        player_pawn.x, player_pawn.y = newx, newy
+        player_pawn.update_position()  # Должен обновлять rect и position
+    
+    if keys[pygame.K_ESCAPE]:
+        pygame.quit()
+        sys.exit()
 
-    except Exception as e:
-        print(f"Произошла ошибка: {e}")
-        
-        
 #---------------------------------------------------------------------------------------------------      
 #Боты
 class BotPawn:
@@ -161,8 +174,6 @@ class BotPawn:
 
 #---------------------------------------------------------------------------------------------------
 # Инициализация объектов
-player_pawn = PlayerPawn(100, 500, player_img)
-
 bots = [
     BotPawn(300, 100, bot_img),
     BotPawn(500, 400, bot_img),
@@ -170,31 +181,37 @@ bots = [
     BotPawn(200, 500, bot_img)
 ]
 
-#Цыкл ботов
+#---------------------------------------------------------------------------------------------------
+#Основной цикл
 def main():
     try:
-         while True:
+        while True:
             handle_events()
-            update_player()
-            update_cursor_pos()
-            player_pawn.rotate()
+            player_pawn.rotate()  # Добавляем поворот
+            move()
 
             for bot in bots:
                 bot.move()
                 bot.rotate()
 
             screen.blit(background, (0, 0))
-            screen.blit(player_pawn.image, player_pawn.rect.topleft)
+            screen.blit(player_pawn.image, player_pawn.rect.topleft)  # Исправленный вызов
 
             for bot in bots:
                 screen.blit(bot.image, bot.rect.topleft)
-
+            
             pygame.display.flip()
             clock.tick(FPS)
+
     except Exception as e:
         print(f"Произошла ошибка: {e}")
+        pygame.quit()
+        sys.exit(1)
+
+        
 #---------------------------------------------------------------------------------------------------
 #Запуск основного цикла
-main()
+if __name__ == "__main__":
+    main()
 
 pygame.quit()

@@ -28,6 +28,7 @@ std::pair<int, int> getCursorPosition() {
 constexpr double PI = 3.14159265358979323846;
 constexpr double RAD_TO_DEG = 180.0 / PI;
 constexpr double FULL_CIRCLE = 360.0;
+constexpr double DIAGONAL_CORRECTION = 0.70710678118;
 
 double getBasePlayerRotation(double player_x, double player_y,
      double mouse_x, double mouse_y) {
@@ -45,36 +46,53 @@ double getBasePlayerRotation(double player_x, double player_y,
     
 }
 
-std::pair<double, double> PawnMove(double x, double y, double angle, double speed, char direction){
-    // direction: 'L' - влево, 'R' - вправо, 'F' - вперед, 'B' - назад
-    double radians = angle * PI / 180.0;
+enum class MovementDirection {
+    LEFT = 1,   // Влево
+    RIGHT = 2,  // Вправо
+    FORWARD = 3,// Вперед
+    BACKWARD = 4// Назад
+};
 
-    // Определяем направление движения
-    double dx, dy;
+std::pair<int, int> PawnMove(int x, int y, double angle, int speed, int direction) {
+    // Преобразуем угол в радианы один раз
+    const double radians = angle * PI / 180.0;
+    
+    // Предварительно вычисляем тригонометрические функции
+    const double cos_angle = std::cos(radians);
+    const double sin_angle = std::sin(radians);
+    
+    double dx = 0.0;
+    double dy = 0.0;
 
-    switch (direction) {
-
-        case 'L': // Движение влево
-
-            dx = -speed * cos(radians);
-            dy = -speed * sin(radians);
+    switch (static_cast<MovementDirection>(direction)) {
+        case MovementDirection::LEFT: // Движение влево
+            dx = -speed * sin_angle;
+            dy = speed * cos_angle;
+            break;
         
-        case 'R': // Движение вправо
-
-            dx = speed * cos(radians);
-            dy = speed * sin(radians);
-
-        case 'F': // Движение вперед
-
-            dx = speed * cos(radians);
-            dy = speed * sin(radians);
-
-        case 'B': // Движение назад - меняем знак скорости'
-
-            dx = -speed * cos(radians);
-            dy = -speed * sin(radians);
+        case MovementDirection::RIGHT: // Движение вправо
+            dx = speed * sin_angle;
+            dy = -speed * cos_angle;
+            break;
+        
+        case MovementDirection::FORWARD: // Движение вперед
+            dx = speed * cos_angle;
+            dy = -speed * sin_angle; // Учитываем инвертированную ось Y
+            break;
+        
+        case MovementDirection::BACKWARD: // Движение назад
+            dx = -speed * cos_angle;
+            dy = speed * sin_angle;
+            break;
+        
+        default:
+            std::cerr << "Unknown direction: " << direction << std::endl;
+            return {x, y};
     }
 
-    // Обновляем координаты
-    return std::make_pair((x += dx), (y += dy));
+    // Возвращаем новые координаты с приведением к целым числам
+    return {
+        x + static_cast<int>(std::round(dx)),
+        y + static_cast<int>(std::round(dy))
+    };
 }

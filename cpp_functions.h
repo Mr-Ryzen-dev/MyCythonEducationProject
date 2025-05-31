@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <windows.h>
-#include <math.h>
+#include <cmath>
 
 //объявление функций
 std::pair<int, int> getScreenSize();
@@ -17,7 +17,7 @@ std::pair<int, int> getCursorPosition();
 double getBasePlayerRotation(double player_x, double player_y, double mouse_x, double mouse_y);
 // Возвращает угол поворота, на который надо повернуть пешку
 
-std::pair<double, double> PawnMove(double x, double y, double angle, double speed, char direction);
+std::pair<int, int> PawnMove(int x, int y, double angle, int speed, int direction);
 // Возвращает координаты на который надо сдвинуть пешку
 
 #endif // CPP_FUNCTIONS_H

@@ -16,7 +16,7 @@ ctypedef struct POINT:
 cdef extern from "cpp_functions.h":
     pair[int, int] getScreenSize()
     pair[int, int] getCursorPosition()
-    pair[double, double] PawnMove(double x, double y, double angle, double speed, char direction)
+    pair[int, int] PawnMove(int x, int y, double angle, int speed, char direction)
     double getBasePlayerRotation(double player_x, double player_y, double mouse_x, double mouse_y)
 
 def py_getScreenSize():
@@ -31,6 +31,6 @@ def py_getBasePlayerRotation(double player_x, double player_y, double mouse_x, d
     cdef double result = getBasePlayerRotation(player_x, player_y, mouse_x, mouse_y)
     return result
 
-def py_PawnMove(double x, double y, double angle, double speed, char direction):
-    cdef pair[double, double] result = PawnMove(x, y, angle, speed, direction)
+def py_PawnMove(int x, int y, double angle, int speed, int direction):
+    cdef pair[int, int] result = PawnMove(x, y, angle, speed, direction)
     return result.first, result.second
